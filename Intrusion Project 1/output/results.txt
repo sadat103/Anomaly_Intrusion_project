@@ -1,0 +1,76 @@
+Multi-class (type)
+  training accuracy: 98.1453%
+  test accuracy: 97.8125%
+  tree (internal, leaves, empty leaves, depth): (9043, 57045, 55591, 40)
+  learn time: 7.9s
+
+Confusion matrix (test)
+                 backdoor  ddos   dos  injection  mitm  normal  password  ransomware  scanning   xss
+true backdoor        5993     3     0          0     0       4         0           0         0     0
+true ddos               0  5828     5         69     6      14         9           0         0    69
+true dos                0     1  5613          7    63     250        10           0        56     0
+true injection          0    52     1       5564     9       7       166           0        21   180
+true mitm               0     1    12          8   265      15         4           1         3     4
+true normal             0     7     9          4    24   14941         2           8         1     4
+true password           0     4     6         49    55       0      5878           0         3     5
+true ransomware         0     0     0          0     0      13         0        5987         0     0
+true scanning           0     0    13          0    25       4         2           1      5954     1
+true xss                0    15     1         70     7       2         0           0         0  5905
+
+            support  recall  precision
+backdoor       6000  0.9988     1.0000
+ddos           6000  0.9713     0.9860
+dos            6000  0.9355     0.9917
+injection      6000  0.9273     0.9641
+mitm            313  0.8466     0.5837
+normal        15000  0.9961     0.9797
+password       6000  0.9797     0.9682
+ransomware     6000  0.9978     0.9983
+scanning       6000  0.9923     0.9861
+xss            6000  0.9842     0.9574
+
+Attack vs normal from multi-class tree: accuracy 99.4188%, detection 99.3604%, false alarms 0.3933%
+
+Test records identical to a training record: 7361 of 63313 (11.63%)
+  accuracy on those records      : 99.8098%
+  accuracy on never-seen records : 97.5497%  (55952 records)
+
+Learning curve
+ train fraction  train examples  train acc  test acc  internal nodes  leaves  depth  learn time (s)
+           0.01            1477   0.991875  0.943771             302    2036     40            0.30
+           0.05            7386   0.982399  0.966010            1502    9570     40            1.21
+           0.10           14773   0.984160  0.971033            2168   13762     40            1.79
+           0.25           36932   0.981615  0.974823            4480   28284     40            3.77
+           0.50           73865   0.982102  0.976940            5816   36785     40            5.02
+           1.00          147730   0.981453  0.978125            9043   57045     40            8.01
+
+Pure DTL vs stop at zero gain
+                variant  internal  leaves  empty leaves  depth  train acc  test acc  learn time (s)
+pure DTL (required run)      9043   57045         55591     40   0.981453  0.978125            7.95
+      stop at zero gain       692    4678          3227     12   0.981453  0.978125            2.12
+
+Binary (label)
+  training accuracy: 99.5343%
+  test accuracy: 99.4330%
+  tree (internal, leaves, empty leaves, depth): (1594, 10107, 9636, 40)
+
+Attribute usage
+       attribute  times tested  examples routed  shallowest depth
+0       dst_port             1           147730                 0
+1   src_ip_bytes            82           103625                 1
+2     conn_state           150            92941                 1
+3       duration           112            58482                 2
+4      dns_query           170            55077                 1
+5       dst_pkts           188            45840                 2
+6          proto           253            45502                 3
+7       src_pkts           217            44943                 2
+8      src_bytes           240            43789                 3
+9      dst_bytes           206            42261                 2
+10  dst_ip_bytes           233            41594                 2
+11  missed_bytes           241            40182                 2
+12       service           255            39233                 2
+13      src_port           258            38036                 1
+14     dns_rcode           238            34893                 4
+
+Whole notebook run time: 70s | peak memory of this kernel: 729 MB
+Container limits: memory 4.00 GB, CPU 2 CPU(s)
